@@ -1,0 +1,9 @@
+flask
+pandas
+numpy
+openai
+scikit-learn
+python-dotenv
+requests
+matplotlib
+seaborn

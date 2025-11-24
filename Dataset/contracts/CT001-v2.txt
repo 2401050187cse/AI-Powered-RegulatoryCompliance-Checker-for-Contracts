@@ -1,0 +1,5 @@
+processing of personal data is allowed. consent handled by customer.
+
+--- Amendment on 2025-11-23T09:58:20.777709 ---
+Applied Regulation: GDPR Consent Logging
+Summary: Requires timestamp-based consent tracking.

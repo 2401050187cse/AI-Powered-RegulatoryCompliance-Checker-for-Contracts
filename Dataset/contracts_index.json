@@ -1,0 +1,20 @@
+{
+  "CT001": {
+    "name": "EU SaaS Service Agreement",
+    "jurisdiction": "EU",
+    "version": 2,
+    "file": "contracts/CT001-v2.txt",
+    "applied": [
+      "REG-EU-001"
+    ]
+  },
+  "CT002": {
+    "name": "India Hosting Contract",
+    "jurisdiction": "IN",
+    "version": 2,
+    "file": "contracts/CT002-v2.txt",
+    "applied": [
+      "REG-IN-001"
+    ]
+  }
+}

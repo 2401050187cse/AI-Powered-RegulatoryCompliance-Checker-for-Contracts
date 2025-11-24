@@ -1,0 +1,35 @@
+[
+  {
+    "id": "REG-EU-001",
+    "title": "GDPR Consent Logging",
+    "jurisdiction": "EU",
+    "summary": "Requires timestamp-based consent tracking.",
+    "keywords": [
+      "consent",
+      "personal data",
+      "logging"
+    ]
+  },
+  {
+    "id": "REG-IN-001",
+    "title": "India Data Localisation",
+    "jurisdiction": "IN",
+    "summary": "Requires sensitive personal data stored within India.",
+    "keywords": [
+      "localisation",
+      "cross-border",
+      "personal data"
+    ]
+  },
+  {
+    "id": "REG-MOCK-60afb7",
+    "title": "Global Privacy Profiling Disclosure",
+    "jurisdiction": "GLOBAL",
+    "summary": "Requires organisations to notify users of automated profiling.",
+    "keywords": [
+      "profiling",
+      "notice",
+      "transparency"
+    ]
+  }
+]

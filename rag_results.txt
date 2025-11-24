@@ -1,0 +1,87 @@
+Q: & D:/AI-Powered-RegulatoryCompliance-Checker-for-Contracts/env/Scripts/python.exe d:/AI-Powered-RegulatoryCompliance-Checker-for-Contracts/rag_system.py
+A: I don't know
+Sources:
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+============================================================
+Q: & D:/AI-Powered-RegulatoryCompliance-Checker-for-Contracts/env/Scripts/python.exe d:/AI-Powered-RegulatoryCompliance-Checker-for-Contracts/rag_system.py
+A: I don't know
+Sources:
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+============================================================
+Q: & D:/AI-Powered-RegulatoryCompliance-Checker-for-Contracts/env/Scripts/python.exe d:/AI-Powered-RegulatoryCompliance-Checker-for-Contracts/rag_system.py
+A: I don't know
+Sources:
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+============================================================
+Q: Extract key clauses from this contract and identify compliance risks
+A: **Contract #011: Vendor Contract**
+
+Key Clauses:
+
+1. **Scope of Services**: Martin Rose and Obrien agrees to perform professional services as described in the Statement of Work.
+2. **Data Protection**: Martin Rose and Obrien agrees to maintain technical and organizational measures to prevent unauthorized access to personal data.
+3. **Compliance & Audit Rights**: Each Party agrees to comply with applicable industry standards and regulations. Hickman Ltd retains the right to audit Martin Rose and Obrien's compliance practices with prior written notice.
+4. **Termination**: Either Party may terminate this Agreement with 30 days’ written notice for material breach, provided the breaching Party fails to cure such breach within the notice period.
+5. **Liability Limitation**: Neither Party shall be liable for indirect or consequential damages. Total liability shall not exceed fees paid under this Agreement during the preceding 12-month period.
+
+Compliance Risks:
+
+1. **Data Protection**: Martin Rose and Obrien may not have adequate technical and organizational measures in place to prevent unauthorized access to personal data, which could lead to a data breach.
+2. **Compliance & Audit Rights**: Hickman Ltd may not have the necessary resources or expertise to conduct audits, which could lead to non-compliance with industry standards and regulations.
+3. **Termination**: The 30-day notice period may not be sufficient to address material breaches, which could lead to non-compliance with industry standards and regulations.
+
+**Contract #241: Non-Disclosure Agreement**
+
+Key Clauses:
+
+1. **Scope of Services**: Lam Pena and Walker agrees to perform professional services as described in the Statement of Work.
+2. **Confidentiality**: Each Party shall maintain the confidentiality of proprietary or sensitive information shared under this Agreement and shall use such information solely for the performance of obligations herein.
+3. **Data Protection**: Each Party agrees to comply with applicable industry standards and regulations.
+4. **Compliance & Audit Rights**: Each Party agrees to comply with applicable industry standards and regulations. Johnson-Hill retains the right to audit Pena-Armstrong's compliance practices with prior written notice.
+5. **Termination**: Either Party may terminate this Agreement with 30 days’ written notice for material breach, provided the breaching Party fails to cure such breach within the notice period.
+6. **Liability Limitation**: Neither Party shall be liable for indirect or consequential damages. Total liability shall not exceed fees paid under this Agreement during the preceding 12-month period.
+
+Compliance Risks:
+
+1. **Confidentiality**: Lam Pena and Walker may not have adequate measures in place to maintain the confidentiality of proprietary or sensitive information shared under this Agreement.
+2. **Data Protection**: Each Party may not have adequate technical and organizational measures in place to prevent unauthorized access to personal data, which could lead to a data breach.
+3. **Compliance & Audit Rights**: Johnson-Hill may not have the necessary resources or expertise to conduct audits, which could lead to non-compliance with industry standards and regulations.
+Sources:
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Dataset.txt
+============================================================
+Q: 
+A: I don't know
+Sources:
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+============================================================
+Q: & D:/AI-Powered-RegulatoryCompliance-Checker-for-Contracts/env/Scripts/python.exe d:/AI-Powered-RegulatoryCompliance-Checker-for-Contracts/rag_system.py
+A: I don't know
+Sources:
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+============================================================
+Q: & D:/AI-Powered-RegulatoryCompliance-Checker-for-Contracts/env/Scripts/python.exe d:/AI-Powered-RegulatoryCompliance-Checker-for-Contracts/rag_system.py
+A: I don't know
+Sources:
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+- D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset\Business_Compliance_Dataset.pdf
+============================================================

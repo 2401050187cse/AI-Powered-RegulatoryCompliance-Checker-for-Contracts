@@ -1,0 +1,5 @@
+SaaS Provider Agreement
+
+1. Data Processing: Provider will process personal data.
+2. Security: Provider shall maintain security.
+3. Consent: Customer must obtain consent.

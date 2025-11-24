@@ -1,0 +1,28 @@
+{
+  "contract-001": {
+    "id": "contract-001",
+    "title": "SaaS Provider Agreement",
+    "jurisdiction": "EU",
+    "parties": [
+      "Acme Corp",
+      "Cloudy SaaS Ltd"
+    ],
+    "effective_date": "2024-01-01",
+    "version": 1,
+    "file": "contracts/contract-001-v1.txt",
+    "applied_regulations": []
+  },
+  "contract-002": {
+    "id": "contract-002",
+    "title": "India Local Hosting Agreement",
+    "jurisdiction": "IN",
+    "parties": [
+      "Acme Corp",
+      "HostIndia Pvt"
+    ],
+    "effective_date": "2023-06-15",
+    "version": 1,
+    "file": "contracts/contract-002-v1.txt",
+    "applied_regulations": []
+  }
+}

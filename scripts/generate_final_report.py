@@ -97,6 +97,23 @@ def build_report(mappings, processed_text, rag_text, out_path: Path):
             flow.append(Paragraph(l, styles['Normal']))
         flow.append(Spacer(1, 8))
 
+        # Amendments section
+        ams = m.get('amendments') or []
+        if ams:
+            flow.append(Paragraph('Amendments:', styles['Italic']))
+            for a in ams:
+                parts = []
+                if a.get('amendment_id'):
+                    parts.append(f"ID: {a.get('amendment_id')}")
+                if a.get('date'):
+                    parts.append(f"Date: {a.get('date')}")
+                if a.get('summary'):
+                    parts.append(f"Summary: {a.get('summary')}")
+                if a.get('changed_files'):
+                    parts.append(f"Files: {', '.join(a.get('changed_files'))}")
+                flow.append(Paragraph(' | '.join(parts), styles['Normal']))
+            flow.append(Spacer(1, 8))
+
         # include processed_results excerpt if available
         prex = m.get('processed_results_excerpt')
         if not prex:

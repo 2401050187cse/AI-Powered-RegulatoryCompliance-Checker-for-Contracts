@@ -1,0 +1,22 @@
+{
+  "reorganization_date": "2025-11-25T19:02:39.068018",
+  "total_amendments": 2,
+  "systems": {
+    "app": {
+      "file": "data/amendments/app/amendments.json",
+      "count": 2,
+      "system": "app.py (Groq LLM)"
+    },
+    "rag": {
+      "file": "data/amendments/rag/amendments.json",
+      "count": 2,
+      "system": "rag_system.py (FAISS RAG)"
+    },
+    "regulatory": {
+      "file": "data/amendments/regulatory/amendments.json",
+      "count": 2,
+      "system": "regulatory.py (Rules-based)"
+    }
+  },
+  "note": "Amendments organized by analyzing system. Each system evaluates detected changes independently."
+}

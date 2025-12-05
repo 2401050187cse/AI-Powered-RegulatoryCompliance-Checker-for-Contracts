@@ -6,7 +6,7 @@ from datetime import datetime
 from uuid import uuid4
 
 # ===============================================================
-# CONFIGURATION
+# CONFIGURATION (uses your dataset folder)
 # ===============================================================
 DATASET = r"D:\AI-Powered-RegulatoryCompliance-Checker-for-Contracts\Dataset"
 REG_FILE = os.path.join(DATASET, "regulations.json")
@@ -19,16 +19,16 @@ scheduler_thread = None
 
 
 # ===============================================================
-# FILE SETUP
+# FILE & DIRECTORY SETUP
 # ===============================================================
 def ensure_dirs():
-    if os.path.exists(CONTRACT_DIR) is False:
-        os.makedirs(CONTRACT_DIR, exist_ok=True)
-
-
-def save_json(path, data):
-    with open(path, "w") as f:
-        json.dump(data, f, indent=2)
+    os.makedirs(CONTRACT_DIR, exist_ok=True)
+    if not os.path.exists(REG_FILE):
+        with open(REG_FILE, "w") as f:
+            json.dump([], f, indent=2)
+    if not os.path.exists(CONTRACT_FILE):
+        with open(CONTRACT_FILE, "w") as f:
+            json.dump({}, f, indent=2)
 
 
 def load_json(path):
@@ -36,16 +36,15 @@ def load_json(path):
         return json.load(f)
 
 
+def save_json(path, data):
+    with open(path, "w") as f:
+        json.dump(data, f, indent=2)
+
+
 # ===============================================================
-# RESET + CREATE DATASET EVERY RUN
+# SAMPLE DATA CREATION
 # ===============================================================
 def init_sample_data():
-    # Remove old data
-    if os.path.exists(CONTRACT_DIR):
-        for f in os.listdir(CONTRACT_DIR):
-            os.remove(os.path.join(CONTRACT_DIR, f))
-
-    # Initial regulations
     regs = [
         {
             "id": "REG-EU-001",
@@ -64,7 +63,6 @@ def init_sample_data():
     ]
     save_json(REG_FILE, regs)
 
-    # Initial contracts
     contracts = {
         "CT001": {
             "name": "EU SaaS Service Agreement",
@@ -83,18 +81,17 @@ def init_sample_data():
     }
     save_json(CONTRACT_FILE, contracts)
 
-    # Create fresh contract text files
     with open(os.path.join(DATASET, contracts["CT001"]["file"]), "w") as f:
         f.write("Processing of personal data is allowed. Consent handled by customer.")
 
     with open(os.path.join(DATASET, contracts["CT002"]["file"]), "w") as f:
         f.write("Data stored in India. Cross-border transfer allowed with safeguards.")
 
-    print("[DATASET RESET] Fresh dataset created successfully")
+    print("[INIT] Sample dataset created")
 
 
 # ===============================================================
-# LOGIC
+# CONTRACT / REGULATION FUNCTIONS
 # ===============================================================
 def read_contract(meta):
     with open(os.path.join(DATASET, meta["file"]), "r") as f:
@@ -104,13 +101,16 @@ def read_contract(meta):
 def relevance(reg, meta, text):
     score = 0
     matches = []
+
     for kw in reg["keywords"]:
         if kw in text:
             score += 2
             matches.append(kw)
+
     if reg["jurisdiction"].lower() in ["global", meta["jurisdiction"].lower()]:
         score += 3
         matches.append(f"jurisdiction:{reg['jurisdiction']}")
+
     return score, matches
 
 
@@ -119,17 +119,15 @@ def apply_regulation(reg, cid):
     meta = index[cid]
 
     if reg["id"] in meta["applied"]:
-        print("⚠ Regulation already applied.")
+        print("⚠ Regulation already applied to this contract.")
         return
 
     text = read_contract(meta)
     new_version = meta["version"] + 1
     new_file = f"contracts/{cid}-v{new_version}.txt"
-    amendment = (
-        f"\n\n--- Amendment on {datetime.utcnow().isoformat()} ---\n"
-        f"Applied Regulation: {reg['title']}\n"
-        f"Summary: {reg['summary']}\n"
-    )
+
+    amendment = f"\n\n--- Amendment on {datetime.utcnow().isoformat()} ---\nApplied Regulation: {reg['title']}\nSummary: {reg['summary']}\n"
+
     with open(os.path.join(DATASET, new_file), "w") as f:
         f.write(text + amendment)
 
@@ -139,9 +137,12 @@ def apply_regulation(reg, cid):
     index[cid] = meta
     save_json(CONTRACT_FILE, index)
 
-    print(f"✔ Regulation applied — new version created: v{new_version}")
+    print(f"✔ Regulation applied → new version created: v{new_version}")
 
 
+# ===============================================================
+# MOCK API - AUTO REGULATION CREATION
+# ===============================================================
 def fetch_mock_regulation():
     regs = load_json(REG_FILE)
     new = {
@@ -149,15 +150,18 @@ def fetch_mock_regulation():
         "title": "Global Privacy Profiling Disclosure",
         "jurisdiction": "GLOBAL",
         "summary": "Requires organisations to notify users of automated profiling.",
-        "keywords": ["profiling", "notice", "transparency"]
+        "keywords": ["profiling", "notice", "transparency"],
     }
     regs.append(new)
     save_json(REG_FILE, regs)
     print(f"🌍 New mock regulation fetched → {new['id']}")
 
 
+# ===============================================================
+# SCHEDULER
+# ===============================================================
 def scheduler_job():
-    print("[Scheduler running...]")
+    print("[Scheduler running]")
     while not stop_event.is_set():
         fetch_mock_regulation()
         time.sleep(SCHEDULER_INTERVAL)
@@ -168,20 +172,33 @@ def toggle_scheduler():
     global scheduler_thread
     if scheduler_thread and scheduler_thread.is_alive():
         stop_event.set()
-        print("⏹ Scheduler stopping...")
+        print("⏹ Scheduler stop requested.")
     else:
         stop_event.clear()
         scheduler_thread = threading.Thread(target=scheduler_job, daemon=True)
         scheduler_thread.start()
-        print("▶ Scheduler started")
+        print("▶ Scheduler started.")
 
 
 # ===============================================================
-# MENU
+# CLI MENU
 # ===============================================================
 def main():
     ensure_dirs()
-    init_sample_data()   # always update dataset every run
+
+    # Always initialize dataset if regulations OR contracts are empty
+    try:
+        regs = load_json(REG_FILE)
+    except Exception:
+        regs = []
+    try:
+        contracts = load_json(CONTRACT_FILE)
+    except Exception:
+        contracts = {}
+
+    if len(regs) == 0 or len(contracts) == 0:
+        init_sample_data()
+
 
     while True:
         print("\n=== Regulatory Compliance Tracker ===")
@@ -194,11 +211,16 @@ def main():
         print("0) Exit")
 
         c = input("Choose: ").strip()
+
         if c == "1":
-            for r in load_json(REG_FILE):
+            regs = load_json(REG_FILE)
+            print("\n--- Regulations ---")
+            for r in regs:
                 print("•", r["id"], "→", r["title"])
         elif c == "2":
-            for cid, meta in load_json(CONTRACT_FILE).items():
+            idx = load_json(CONTRACT_FILE)
+            print("\n--- Contracts ---")
+            for cid, meta in idx.items():
                 print(f"• {cid} → {meta['name']} (v{meta['version']})")
         elif c == "3":
             regs = load_json(REG_FILE)
@@ -215,6 +237,7 @@ def main():
         elif c == "4":
             regs = load_json(REG_FILE)
             idx = load_json(CONTRACT_FILE)
+
             print("\nAvailable regulations:")
             for r in regs:
                 print(" -", r["id"])
@@ -223,6 +246,7 @@ def main():
             if not reg:
                 print("❌ Invalid regulation")
                 continue
+
             print("\nAvailable contracts:")
             for key in idx:
                 print(" -", key)
@@ -230,6 +254,7 @@ def main():
             if cid not in idx:
                 print("❌ Invalid contract")
                 continue
+
             apply_regulation(reg, cid)
         elif c == "5":
             fetch_mock_regulation()
@@ -237,11 +262,11 @@ def main():
             toggle_scheduler()
         elif c == "0":
             stop_event.set()
-            print("👋 Goodbye")
+            print("👋 Goodbye!")
             break
         else:
-            print("❌ Invalid choice")
-
+            print("❌ Invalid choice, try again.")
+            
 
 if __name__ == "__main__":
     main()

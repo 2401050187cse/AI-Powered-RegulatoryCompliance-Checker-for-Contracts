@@ -10,6 +10,7 @@
       "pdf_size_bytes": 1818,
       "txt_size_bytes": 176,
       "txt_sha256": "8a6b6a70c0589ea268f9afb4aa70f95ca2e539add12529dca756c000c6905c2d",
+      "amendments": [],
       "index_file": "data\\contracts_index.json",
       "processed_results": "processed_results.json",
       "processed_results_excerpt": null,
@@ -27,6 +28,7 @@
       "pdf_size_bytes": 1798,
       "txt_size_bytes": 138,
       "txt_sha256": "a3cefcdb5a3115f934500a7d2e0358fba5ca0f15686021f5046fec11c907afc0",
+      "amendments": [],
       "index_file": "data\\contracts_index.json",
       "processed_results": "processed_results.json",
       "processed_results_excerpt": null,
@@ -44,6 +46,18 @@
       "pdf_size_bytes": 1866,
       "txt_size_bytes": 216,
       "txt_sha256": "d9ffa94340b4d59458500b9657d50f44d6819e7263bed2ca8a5a95df5ea68546",
+      "amendments": [
+        {
+          "asset_id": "CT001",
+          "amendment_id": "CT001-amend-v2",
+          "date": "2025-11-23T15:28:20.778709",
+          "summary": "Update from v1 to v2",
+          "changed_files": [
+            "Dataset\\contracts\\CT001-v2.txt"
+          ],
+          "author": null
+        }
+      ],
       "index_file": "Dataset\\contracts_index.json",
       "processed_results": "processed_results.json",
       "processed_results_excerpt": null,
@@ -63,6 +77,18 @@
       "pdf_size_bytes": 1867,
       "txt_size_bytes": 230,
       "txt_sha256": "7b92473045453bd4c0f5d26035c96c8cc4642939057adf048bea733ce8bab9ff",
+      "amendments": [
+        {
+          "asset_id": "CT002",
+          "amendment_id": "CT002-amend-v2",
+          "date": "2025-11-23T15:31:20.862237",
+          "summary": "Update from v1 to v2",
+          "changed_files": [
+            "Dataset\\contracts\\CT002-v2.txt"
+          ],
+          "author": null
+        }
+      ],
       "index_file": "Dataset\\contracts_index.json",
       "processed_results": "processed_results.json",
       "processed_results_excerpt": null,

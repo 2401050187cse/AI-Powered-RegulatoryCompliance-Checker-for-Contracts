@@ -1,0 +1,32 @@
+{
+  "amendments": [
+    {
+      "asset_id": "CT001",
+      "amendment_id": "CT001-amend-v2",
+      "date": "2025-11-23T15:28:20.778709",
+      "summary": "Update from v1 to v2",
+      "changed_files": [
+        "Dataset\\contracts\\CT001-v2.txt"
+      ],
+      "author": null,
+      "analyzed_by_system": "regulatory.py",
+      "analysis_date": "2025-11-25T19:02:39.067018",
+      "system_specific_notes": "Evaluated against regulatory rules and compliance framework"
+    },
+    {
+      "asset_id": "CT002",
+      "amendment_id": "CT002-amend-v2",
+      "date": "2025-11-23T15:31:20.862237",
+      "summary": "Update from v1 to v2",
+      "changed_files": [
+        "Dataset\\contracts\\CT002-v2.txt"
+      ],
+      "author": null,
+      "analyzed_by_system": "regulatory.py",
+      "analysis_date": "2025-11-25T19:02:39.067018",
+      "system_specific_notes": "Evaluated against regulatory rules and compliance framework"
+    }
+  ],
+  "system": "regulatory.py",
+  "count": 2
+}

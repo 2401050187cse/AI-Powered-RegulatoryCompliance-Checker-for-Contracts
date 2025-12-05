@@ -44,6 +44,9 @@ def build_mappings(repo_root: Path):
     mappings = []
     proc = read_text(repo_root / 'processed_results.json')
     rag = read_text(repo_root / 'rag_results.txt')
+    # load amendments manifest if present
+    amendments_manifest = load_json(repo_root / 'data' / 'amendments.json')
+    amendments_list = amendments_manifest.get('amendments', []) if amendments_manifest else []
 
     # index files to consider
     index_files = [repo_root / 'data' / 'contracts_index.json', repo_root / 'Dataset' / 'contracts_index.json']
@@ -109,6 +112,7 @@ def build_mappings(repo_root: Path):
                 'pdf_size_bytes': pdf_size_bytes,
                 'txt_size_bytes': txt_size_bytes,
                 'txt_sha256': txt_sha256,
+                'amendments': [a for a in amendments_list if (a.get('asset_id') == key or Path(a.get('changed_files', [''])[0]).stem.startswith(Path(file_rel).stem.split('-v')[0]))],
                 'index_file': str(idx_path.relative_to(repo_root)),
                 'processed_results': 'processed_results.json',
                 'processed_results_excerpt': proc_excerpt,

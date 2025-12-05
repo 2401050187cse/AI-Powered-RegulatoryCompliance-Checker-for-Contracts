@@ -1,9 +1,10 @@
-env/
 venv/
+env/
 __pycache__/
 *.pyc
+*.pyo
 *.dll
-*.so
-*.pyd
-.DS_Store
+.streamlit/secrets.toml
 .env
+*.zip
+*.pdf

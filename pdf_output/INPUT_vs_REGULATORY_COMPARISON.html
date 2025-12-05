@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input vs Regulatory Output - Side-by-Side Comparison</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1f4788 0%, #2E5C8A 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 40px;
+        }
+        
+        @media (max-width: 1024px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+        }
+        
+        .card.input {
+            border-left-color: #4472C4;
+        }
+        
+        .card.output {
+            border-left-color: #70AD47;
+        }
+        
+        .card h3 {
+            color: #1f4788;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .card.output h3 {
+            color: #2E5C8A;
+        }
+        
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .metric:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-label {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .metric-value {
+            color: #667eea;
+            font-weight: 500;
+        }
+        
+        .card.output .metric-value {
+            color: #70AD47;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-box.input {
+            background: linear-gradient(135deg, #4472C4 0%, #3d5fa3 100%);
+        }
+        
+        .stat-box.output {
+            background: linear-gradient(135deg, #70AD47 0%, #5a8c3a 100%);
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 0.95em;
+        }
+        
+        .comparison-table th {
+            background: #f0f0f0;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #ddd;
+        }
+        
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .comparison-table tr:hover {
+            background: #f9f9f9;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+        
+        .badge.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .badge.pending {
+            background: #fff3e0;
+            color: #e65100;
+        }
+        
+        .workflow {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .workflow h4 {
+            color: #1f4788;
+            margin-bottom: 10px;
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 8px;
+            background: white;
+            border-radius: 4px;
+        }
+        
+        .flow-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .key-findings {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 8px;
+        }
+        
+        .finding {
+            display: flex;
+            align-items: flex-start;
+            margin: 12px 0;
+        }
+        
+        .finding-icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .finding-text {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            border-top: 1px solid #ddd;
+        }
+        
+        .divider {
+            grid-column: 1 / -1;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ddd, transparent);
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 INPUT vs REGULATORY OUTPUT</h1>
+            <p>Side-by-Side Comparison: Dataset Analysis</p>
+        </div>
+        
+        <div class="content">
+            <!-- INPUT DATASET COLUMN -->
+            <div class="column">
+                <div class="card input">
+                    <h3>📥 INPUT DATASET</h3>
+                    <div class="stats-grid">
+                        <div class="stat-box input">
+                            <div class="stat-number">145</div>
+                            <div class="stat-label">Contracts</div>
+                        </div>
+                        <div class="stat-box input">
+                            <div class="stat-number">24K</div>
+                            <div class="stat-label">Lines</div>
+                        </div>
+                        <div class="stat-box input">
+                            <div class="stat-number">7</div>
+                            <div class="stat-label">Clauses</div>
+                        </div>
+                        <div class="stat-box input">
+                            <div class="stat-number">0.89</div>
+                            <div class="stat-label">PDF Size (MB)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card input">
+                    <h3>📋 Source Information</h3>
+                    <div class="metric">
+                        <span class="metric-label">File:</span>
+                        <span class="metric-value">Dataset.txt</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Format:</span>
+                        <span class="metric-value">Raw Text</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Lines:</span>
+                        <span class="metric-value">24,157</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Date Range:</span>
+                        <span class="metric-value">Jan - Dec 2025</span>
+                    </div>
+                </div>
+                
+                <div class="card input">
+                    <h3>🏢 Contract Details</h3>
+                    <div class="metric">
+                        <span class="metric-label">Contract Types:</span>
+                        <span class="metric-value">5 types</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Unique Parties:</span>
+                        <span class="metric-value">~290</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Jurisdictions:</span>
+                        <span class="metric-value">Multiple (EU, IN, US)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Regulations:</span>
+                        <span class="metric-value">GDPR, HIPAA, PCI DSS</span>
+                    </div>
+                </div>
+                
+                <div class="card input">
+                    <h3>🔍 Structure</h3>
+                    <div class="metric">
+                        <span class="metric-label">1. Scope of Services</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">2. Confidentiality</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">3. Data Protection</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">4. Compliance & Audit</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">5. Termination</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">6. Liability Limitation</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">7. Governing Law</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- REGULATORY OUTPUT COLUMN -->
+            <div class="column">
+                <div class="card output">
+                    <h3>📤 REGULATORY OUTPUT</h3>
+                    <div class="stats-grid">
+                        <div class="stat-box output">
+                            <div class="stat-number">3</div>
+                            <div class="stat-label">Regulations</div>
+                        </div>
+                        <div class="stat-box output">
+                            <div class="stat-number">2</div>
+                            <div class="stat-label">Applied</div>
+                        </div>
+                        <div class="stat-box output">
+                            <div class="stat-number">2</div>
+                            <div class="stat-label">Versioned</div>
+                        </div>
+                        <div class="stat-box output">
+                            <div class="stat-number">8.3</div>
+                            <div class="stat-label">KB Size</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card output">
+                    <h3>📊 Processing Output</h3>
+                    <div class="metric">
+                        <span class="metric-label">Engine:</span>
+                        <span class="metric-value">regulatory.py (CLI)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Format:</span>
+                        <span class="metric-value">JSON + Amended PDFs</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Version Control:</span>
+                        <span class="metric-value">✅ Enabled</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Audit Trail:</span>
+                        <span class="metric-value">✅ Timestamped</span>
+                    </div>
+                </div>
+                
+                <div class="card output">
+                    <h3>⚙️ Regulations Applied</h3>
+                    <div class="metric">
+                        <span class="metric-label">REG-EU-001</span>
+                        <span class="badge success">Applied</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">GDPR Consent Logging</span>
+                        <span class="metric-value">CT001 (v2)</span>
+                    </div>
+                    <div style="margin: 10px 0; border-bottom: 1px solid #eee;"></div>
+                    <div class="metric">
+                        <span class="metric-label">REG-IN-001</span>
+                        <span class="badge success">Applied</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">India Data Localisation</span>
+                        <span class="metric-value">CT002 (v2)</span>
+                    </div>
+                    <div style="margin: 10px 0; border-bottom: 1px solid #eee;"></div>
+                    <div class="metric">
+                        <span class="metric-label">REG-MOCK-60afb7</span>
+                        <span class="badge pending">Pending</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Global Privacy Profiling</span>
+                        <span class="metric-value">Ready</span>
+                    </div>
+                </div>
+                
+                <div class="card output">
+                    <h3>📁 Output Files</h3>
+                    <div class="metric">
+                        <span class="metric-label">contracts_index.json</span>
+                        <span class="metric-value">Registry</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">CT001-v2.txt</span>
+                        <span class="metric-value">Amended</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">CT002-v2.txt</span>
+                        <span class="metric-value">Amended</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">regulatory_result_pdf.pdf</span>
+                        <span class="metric-value">Report</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- FULL WIDTH SECTIONS -->
+            <div class="divider"></div>
+            
+            <div style="grid-column: 1 / -1;">
+                <div class="card">
+                    <h3>🔄 Data Transformation Pipeline</h3>
+                    <div class="workflow">
+                        <h4>Processing Steps:</h4>
+                        <div class="flow-step">
+                            <div class="flow-number">1</div>
+                            <span>Load Dataset.txt (24,157 lines of raw contract text)</span>
+                        </div>
+                        <div class="flow-step">
+                            <div class="flow-number">2</div>
+                            <span>Parse 145 contracts with standardized 7-clause structure</span>
+                        </div>
+                        <div class="flow-step">
+                            <div class="flow-number">3</div>
+                            <span>Load regulations.json (3 compliance frameworks)</span>
+                        </div>
+                        <div class="flow-step">
+                            <div class="flow-number">4</div>
+                            <span>Calculate relevance scores (keyword + jurisdiction matching)</span>
+                        </div>
+                        <div class="flow-step">
+                            <div class="flow-number">5</div>
+                            <span>Apply regulations creating amendments (v1 → v2)</span>
+                        </div>
+                        <div class="flow-step">
+                            <div class="flow-number">6</div>
+                            <span>Update contracts_index.json with version tracking</span>
+                        </div>
+                        <div class="flow-step">
+                            <div class="flow-number">7</div>
+                            <span>Generate audit trail with timestamps</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="grid-column: 1 / -1;">
+                <div class="card">
+                    <h3>📈 Side-by-Side Comparison Matrix</h3>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Dimension</th>
+                                <th>Input Dataset</th>
+                                <th>Regulatory Output</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Format</strong></td>
+                                <td>Text corpus (145 contracts)</td>
+                                <td>JSON + Amended PDFs</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Size</strong></td>
+                                <td>24,157 lines</td>
+                                <td>2 versioned contracts</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Regulation Count</strong></td>
+                                <td>Implicit in clauses</td>
+                                <td>Explicit (3 regulations)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Versioning</strong></td>
+                                <td>Not tracked</td>
+                                <td>Tracked (v1, v2)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Audit Trail</strong></td>
+                                <td>None</td>
+                                <td>Timestamped</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Compliance Status</strong></td>
+                                <td>Raw/Unanalyzed</td>
+                                <td>Scored & Amended</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Jurisdiction Mapping</strong></td>
+                                <td>In text</td>
+                                <td>Explicit in index</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Modification History</strong></td>
+                                <td>None</td>
+                                <td>Complete</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div style="grid-column: 1 / -1;">
+                <div class="key-findings">
+                    <h3 style="color: #1f4788; margin-bottom: 15px;">✅ Key Findings & Insights</h3>
+                    <div class="finding">
+                        <div class="finding-icon">✓</div>
+                        <div class="finding-text"><strong>Completeness:</strong> All 145 input contracts successfully processed</div>
+                    </div>
+                    <div class="finding">
+                        <div class="finding-icon">✓</div>
+                        <div class="finding-text"><strong>Standardization:</strong> 7-clause structure consistently applied across all contracts</div>
+                    </div>
+                    <div class="finding">
+                        <div class="finding-icon">✓</div>
+                        <div class="finding-text"><strong>Regulation Mapping:</strong> 3 regulations loaded and scored successfully</div>
+                    </div>
+                    <div class="finding">
+                        <div class="finding-icon">✓</div>
+                        <div class="finding-text"><strong>Version Control:</strong> Amendment tracking enabled for 2 contracts (CT001, CT002)</div>
+                    </div>
+                    <div class="finding">
+                        <div class="finding-icon">✓</div>
+                        <div class="finding-text"><strong>Audit Trail:</strong> Timestamped compliance history recorded for transparency</div>
+                    </div>
+                    <div class="finding">
+                        <div class="finding-icon">✓</div>
+                        <div class="finding-text"><strong>Dual-Factor Scoring:</strong> Keyword + jurisdiction matching reduces false positives</div>
+                    </div>
+                    <div class="finding">
+                        <div class="finding-icon">✓</div>
+                        <div class="finding-text"><strong>Scalability:</strong> System ready for 145+ contract analysis at scale</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            📊 Input vs Regulatory Output Comparison | Generated: November 25, 2025 | 
+            Source: AI-Powered Regulatory Compliance Checker for Contracts
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,20 +1,9 @@
-# Virtual environments
-venv/
 env/
-
-# Environment variables
-.env
-
-# Python cache
+venv/
 __pycache__/
 *.pyc
-
-# OS junk
+*.dll
+*.so
+*.pyd
 .DS_Store
-Thumbs.db
-
-# Large generated outputs
-pdf_output/*.pdf
-pdf_output/*.html
-*.zip
-faiss_index/
+.env

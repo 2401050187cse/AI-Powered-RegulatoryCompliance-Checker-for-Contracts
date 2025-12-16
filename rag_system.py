@@ -9,14 +9,30 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # LangChain imports
-from langchain_community.document_loaders import TextLoader, PyPDFLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import FAISS
-from langchain_huggingface import HuggingFaceEmbeddings
+# ---------------- LangChain (Modern 1.2+) ----------------
 
+# Document loading
+from langchain_community.document_loaders import TextLoader, PyPDFLoader
+
+# Text splitting
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+# Vector store
+from langchain_community.vectorstores import FAISS
+
+# Embeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
+
+
+# Prompt & runnable pipeline
 from langchain_core.prompts import ChatPromptTemplate
-from langchain.chains.combine_documents import create_stuff_documents_chain
-from langchain.chains import create_retrieval_chain
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.output_parsers import StrOutputParser
+
+# LLM (Groq)
+from langchain_groq import ChatGroq
+
+
 
 from langchain_groq import ChatGroq
 
@@ -116,10 +132,16 @@ def get_retriever(vs):
 # -------------- RAG CHAIN --------------
 def make_chain(retriever):
     prompt = ChatPromptTemplate.from_messages([
-        ("system",
-         "You are a senior legal compliance AI. Provide well-structured contract "
-         "analysis using ONLY the provided context."),
-        ("human", "Question:\n{input}\n\nContext:\n{context}")
+        (
+            "system",
+            "You are a senior legal compliance AI. "
+            "Provide structured contract compliance analysis "
+            "using ONLY the given context."
+        ),
+        (
+            "human",
+            "Question:\n{input}\n\nContext:\n{context}"
+        )
     ])
 
     llm = ChatGroq(
@@ -128,8 +150,18 @@ def make_chain(retriever):
         temperature=0.1
     )
 
-    doc_chain = create_stuff_documents_chain(llm, prompt)
-    return create_retrieval_chain(retriever, doc_chain)
+    chain = (
+        {
+            "context": retriever,
+            "input": RunnablePassthrough()
+        }
+        | prompt
+        | llm
+        | StrOutputParser()
+    )
+
+    return chain
+
 
 
 # -------------- MAIN --------------
@@ -153,10 +185,11 @@ def main():
 
     print("🔍 Analyzing contract against compliance standards...\n")
 
-    resp = chain.invoke({"input": QUESTION})
+    resp = chain.invoke(QUESTION)
 
     print("📝 Analysis Result:\n")
-    print(resp["answer"])
+    print(resp)
+
 
 
 if __name__ == "__main__":

@@ -7,4 +7,7 @@ __pycache__/
 .streamlit/secrets.toml
 .env
 *.zip
-*.pdf
+*.pdffaiss_index/
+updated_contracts/
+uploads/
+uploaded_contracts/
